@@ -7,7 +7,7 @@
 # How: zillions of random swaps, while keeping number-of-zeros even-ish
 # Run: python buckets.py -h
 #      e.g.: python buckets.py -v 0 -t 4 -g 50000 -l 10 < prefs.txt
-# python buckets.py --calc "5, 4, 28, 31,  17, 29, 14, 6,  2, 26, 27, 8,  15, 20, 16, 32,  13, 7, 18, 12,  1, 11, 22, 30,  23, 19, 24, 21,  9, 10, 3, 25"  < prefs2.txt
+# python buckets.py -t 4 --calc "5, 4, 28, 31,  17, 29, 14, 6,  2, 26, 27, 8,  15, 20, 16, 32,  13, 7, 18, 12,  1, 11, 22, 30,  23, 19, 24, 21,  9, 10, 3, 25"  < prefs2.txt
 #
 import sys
 import random
@@ -250,6 +250,7 @@ class Buckets:
 
 
     def reportTeamsZeros(self, aList):
+        self.log(1,"reportTeamsZeros teamCount: %d" % self.teamCount)
         tp=[]
         for n in range(0, self.teamCount):
             (score, zeros) = self.score_team_zeros(n, aList)
@@ -321,8 +322,11 @@ class Buckets:
                 print(("Team %d: " % (team+1)), end="")
 
             print( ( "%s," % (self.prefs[ aList[i]-1 ][0]) ), end="")
-        print()
+        self.printCmdLineCalc()
 
+    def printCmdLineCalc (self):
+        ss = str(self.super_folks).replace("[","\"").replace("]","\"")
+        print("\n\nTo recalculate:\npython3 buckets-no-zeros.py -t %d --calc %s < prefsfile" % (self.teamsize, ss ) )
 
     def ranksFromPrefs(self, record):
         return record[1:]
@@ -553,6 +557,9 @@ if __name__ == '__main__':
         b.readStdIn()
         x = args.calc.split(',')
         mylist = [ (int(zz)) for zz in x]
+        print("calc list: %s" % str(mylist))
+        b.reportOtherFolks(mylist)
+
         print("now %s" % str( b.reportTeamsZeros( mylist )))
         b.pprint2(mylist)
         exit()

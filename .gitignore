@@ -1,0 +1,11 @@
+# old/    ignore entire folder
+# blee.*  anywhere
+# /blee.* only in this folder
+old/
+bak/
+private/
+*.*~
+*~
+.DS_Store
+#*
+
