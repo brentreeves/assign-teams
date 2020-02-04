@@ -112,12 +112,7 @@ class Buckets:
         t2 = self.teamFromSpot(r2)
         return (r1, r2, t1, t2)
 
-    # def pick2RandomAndteams (self, i1, i2):
-    #     t1 = self.teamFromSpot(i1)
-    #     t2 = self.teamFromSpot(i2)
-    #     return (i1, i2, t1, t2)
-
-
+    
     def randomSwap (self):
         r1 = random.randint(0, len(self.folks)-1)
         r2 = random.randint(0, len(self.folks)-1)
@@ -175,12 +170,6 @@ class Buckets:
     def score_team(self, team, aList):
         (score, team) = self.score_team_zeros(team, aList)
         return score
-
-    
-    def score_2team_zeros(self, team1, team2, aList):
-        self.log(3, "score_2team_zeros")
-        (s1, z1) = score_team_zeros(team1, aList)
-        return (1, 2, 3, 4)
 
 
     def score_team_zeros(self, team, aList):
@@ -295,13 +284,16 @@ class Buckets:
                 print("Team %d (%2d) %d zeros " % (team, score, zeros))
 
                 # print( "pprint %i teams(): %d" % (i, teams[i] ))
-            # print( ("%2d (%2d) %s %s\t" % (aList[i],
-            #                                self.score_one(i, aList),
-            #                                self.prefs[ aList[i]-1 ][0],
-            #                                str(self.prefs[ aList[i]-1 ] ))))
-            print( ("%2d (%2d) %s\t" % (aList[i],
+
+            print( ("%2d (%2d) %s %s\t" % (aList[i],
                                            self.score_one(i, aList),
-                                           self.prefs[ aList[i]-1 ][0])) )
+                                           self.prefs[ aList[i]-1 ][0],
+                                           str(self.prefs[ aList[i]-1 ] ))))
+            # print( ("%2d (%2d) %s\t" % (aList[i],
+            #                                self.score_one(i, aList),
+            #                                self.prefs[ aList[i]-1 ][0])) )
+
+
         print("\nScore: %d  Teamsize: %d Mean: %d High: %d Low %d" % (totalScore, self.teamsize, totalScore / ((len(self.folks) / self.teamsize)+1), highteam, lowteam))
 
 
@@ -321,7 +313,7 @@ class Buckets:
                     highteam = score
                 print(("Team %d: " % (team+1)), end="")
 
-            print( ( "%s," % (self.prefs[ aList[i]-1 ][0]) ), end="")
+            print( ( "%s, " % (self.prefs[ aList[i]-1 ][0]) ), end="")
         self.printCmdLineCalc()
 
     def printCmdLineCalc (self):
