@@ -1,6 +1,7 @@
 # File: buckets.py  Mr Blee's Fabulous Olde Team Picker
 # Author: Brent Reeves
-# Copyright: (c) 2018 Brent Reeves
+# Copyright: (c) 2018-2021 Brent Reeves
+#
 # Date: Spring 2018
 # Input: team member preference list:  Name,int,int,int,int...  1-based preferences in order
 # Output: optimized teams
@@ -141,10 +142,10 @@ class Buckets:
 
         myprefs = self.prefs[person1 - 1]
 
-        self.log(3, "  score_pref spot: %d-%d person %d-%d aList %d prefs: %d" % (spot, spot2, person1, person2, len(aList), len(myprefs )))
+        self.log(3, "  score_pref spot: %d-%d person %d-%d n[] %d prefs: %d" % (spot, spot2, person1, person2, len(aList), len(myprefs )))
 
         for n in range(0, len(myprefs)-1):
-            self.log(3, "  trying  %d-%d person %d-%d n %d aList %d" % (spot, spot2, person1, person2, n, len(aList) ))
+            self.log(3, "  trying  %d-%d person %d-%d n %d n[] %d" % (spot, spot2, person1, person2, n, len(aList) ))
 
             if self.prefs[ person1-1 ][n+1] == person2:
                 self.log(3, "  score_pref %d-%d person %d-%d RATES %d (%d th)" % (spot, spot2, aList[spot], person2, self.rank[n], n))
@@ -297,7 +298,7 @@ class Buckets:
                                            self.score_one(i, aList),
                                            self.prefs[ aList[i]-1 ][0],
                                            str(self.prefs[ aList[i]-1 ] ))))
-        print("Score: %d  Teamsize: %d Mean: %d High: %d Low %d" % (totalScore, self.teamsize, totalScore / ((len(self.folks) / self.teamsize)+1), highteam, lowteam))
+        print("Score: %d  Teamsize: %d Mean: %d High: %d Low: %d" % (totalScore, self.teamsize, totalScore / ((len(self.folks) / self.teamsize)+1), highteam, lowteam))
 
 
     def pprint3(self, aList):

@@ -1,6 +1,6 @@
 # File: buckets-no-zeros.py  Mr Blee's Fabulous Olde Team Picker
 # Author: Brent Reeves
-# Copyright: (c) 2018 Brent Reeves
+# Copyright: (c) 2018-2021 Brent Reeves
 # Date: Spring 2018
 # Input: team member preference list:  Name,int,int,int,int...  1-based preferences in order
 # Output: optimized teams
@@ -46,7 +46,7 @@ class Buckets:
 
 
     def readStdIn(self):
-        maxprefs = 6
+        maxprefs = 6 # defaults to 6, but expands automatically
         f = sys.stdin.readlines()
         clean = [( x.replace('\n','')) for x in f ]
         for line in clean:
@@ -294,7 +294,7 @@ class Buckets:
             #                                self.prefs[ aList[i]-1 ][0])) )
 
 
-        print("\nScore: %d  Teamsize: %d Mean: %d High: %d Low %d" % (totalScore, self.teamsize, totalScore / ((len(self.folks) / self.teamsize)+1), highteam, lowteam))
+        print("\nScore: %d  Teamsize: %d Mean: %d High: %d Low: %d" % (totalScore, self.teamsize, totalScore / ((len(self.folks) / self.teamsize)+1), highteam, lowteam))
 
 
     def pprint3(self, aList):
