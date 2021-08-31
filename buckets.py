@@ -46,7 +46,7 @@ class Buckets:
 
 
     def readStdIn(self):
-        maxprefs = 0
+        maxprefs = 6
         f = sys.stdin.readlines()
         clean = [( x.replace('\n','')) for x in f ]
         for line in clean:
@@ -74,7 +74,7 @@ class Buckets:
         # self.rank = [(max - i) for i in range(0,max)]
         # self.rank = [3,3,2,2,1,1,0,0,0]
         # self.rank = [18,12,6,2,1,1,0,0,0] // produces too many zeros?
-        self.rank = [3,2,2,1,1,1,0,0,0]
+        self.rank = [3,2,2, 1,1,1, -3,-3,0] # 7th and 8th place are please avoid
 
 
     def setupFolks(self):
@@ -138,11 +138,14 @@ class Buckets:
             return 0
 
         self.log(2, " person1 %d  person2 %d  prefs: %s " % (person1, person2, str(self.prefs)))
+
         myprefs = self.prefs[person1 - 1]
 
         self.log(3, "  score_pref spot: %d-%d person %d-%d aList %d prefs: %d" % (spot, spot2, person1, person2, len(aList), len(myprefs )))
+
         for n in range(0, len(myprefs)-1):
             self.log(3, "  trying  %d-%d person %d-%d n %d aList %d" % (spot, spot2, person1, person2, n, len(aList) ))
+
             if self.prefs[ person1-1 ][n+1] == person2:
                 self.log(3, "  score_pref %d-%d person %d-%d RATES %d (%d th)" % (spot, spot2, aList[spot], person2, self.rank[n], n))
                 return self.rank[n]
@@ -367,9 +370,11 @@ class Buckets:
 
     def shallWeBegin(self):
         self.starting()
-        self.arrange();
+        self.arrange()
+        self.swirly()
         print("\nMr. Blee's Fabulous Olde Team Picker %s" % self.planbyo())
         random.seed( self.seed )
+
 
 
     def goodTrade(self, zeros_before1, zeros_before2, zeros_after1, zeros_after2):
@@ -402,6 +407,7 @@ class Buckets:
 
 
     def exchangeMaybePlanB(self):
+        self.log(2,"EXCHANGEMAYBEPLAN BBB")
         (spot1, spot2, team1, team2) = self.pick2SpotsAndteams()
 
         (before1, zeros_before1) = b.score_team_zeros(team1, b.folks)
@@ -433,7 +439,8 @@ class Buckets:
         
 
     def exchangeMaybePlanA(self):
-        self.log(2,"EXCHANGEMAYBEPLANA")
+        self.log(2,"EXCHANGEMAYBEPLAN AAA")
+        self.exchanges += 1
         ij = self.randomSwap()
         new_score = self.score_all(self.folks)
         if new_score > self.max_score:
@@ -448,6 +455,15 @@ class Buckets:
                 # undo the swap
                 self.log(2, "Undo %d:  %d vs %d  %s" % (self.generations, new_score, self.max_score, str(ij)))
                 self.swap( ij[0], ij[1])
+                self.exchanges -= 1
+
+
+    def swirly(self):
+        self.log(2,"swirly")
+        for i in range(0, 50):
+            self.randomSwap()
+        self.scorenow('Swirl', self.folks, 0, 0)
+
 
 
     def run(self):
@@ -478,7 +494,10 @@ class Buckets:
         self.countOverides = 0
         self.log(1,"run starting with %d folks" % len(self.folks))
         self.cache_score(-1)
+        self.swirly()
+        
         self.log(1,"YoYo %s" % self.reportTeamsZeros( self.folks ))
+
 
         current_score = self.score_all(self.folks)
 

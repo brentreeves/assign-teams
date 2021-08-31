@@ -46,7 +46,7 @@ class Buckets:
 
 
     def readStdIn(self):
-        maxprefs = 0
+        maxprefs = 6
         f = sys.stdin.readlines()
         clean = [( x.replace('\n','')) for x in f ]
         for line in clean:
